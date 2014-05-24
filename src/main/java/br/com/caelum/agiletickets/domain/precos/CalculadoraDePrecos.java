@@ -12,10 +12,8 @@ public class CalculadoraDePrecos {
 		
 		if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.CINEMA) || sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.SHOW)) {
 			preco = getPreco(sessao, 0.05, 0.10);
-		} else if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.BALLET)) {
-			preco = getPreco(sessao, 0.5, 0.20);
-			preco = getPreco(sessao, preco);
-		} else if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.ORQUESTRA)) {
+		} else if((sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.BALLET)) ||
+				(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.ORQUESTRA))) {
 			preco = getPreco(sessao, 0.5, 0.20);
 			preco = getPreco(sessao, preco);
 		}  else {
