@@ -11,38 +11,35 @@ public class CalculadoraDePrecos {
 		BigDecimal preco;
 		
 		if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.CINEMA) || sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.SHOW)) {
-			//quando estiver acabando os ingressos... 
-			if((sessao.getTotalIngressos() - sessao.getIngressosReservados()) / sessao.getTotalIngressos().doubleValue() <= 0.05) { 
-				preco = sessao.getPreco().add(sessao.getPreco().multiply(BigDecimal.valueOf(0.10)));
-			} else {
-				preco = sessao.getPreco();
-			}
+			preco = getPreco(sessao, 0.05, 0.10);
 		} else if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.BALLET)) {
-			if((sessao.getTotalIngressos() - sessao.getIngressosReservados()) / sessao.getTotalIngressos().doubleValue() <= 0.50) { 
-				preco = sessao.getPreco().add(sessao.getPreco().multiply(BigDecimal.valueOf(0.20)));
-			} else {
-				preco = sessao.getPreco();
-			}
-			
-			if(sessao.getDuracaoEmMinutos() > 60){
-				preco = preco.add(sessao.getPreco().multiply(BigDecimal.valueOf(0.10)));
-			}
+			preco = getPreco(sessao, 0.5, 0.20);
+			preco = getPreco(sessao, preco);
 		} else if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.ORQUESTRA)) {
-			if((sessao.getTotalIngressos() - sessao.getIngressosReservados()) / sessao.getTotalIngressos().doubleValue() <= 0.50) { 
-				preco = sessao.getPreco().add(sessao.getPreco().multiply(BigDecimal.valueOf(0.20)));
-			} else {
-				preco = sessao.getPreco();
-			}
-
-			if(sessao.getDuracaoEmMinutos() > 60){
-				preco = preco.add(sessao.getPreco().multiply(BigDecimal.valueOf(0.10)));
-			}
+			preco = getPreco(sessao, 0.5, 0.20);
+			preco = getPreco(sessao, preco);
 		}  else {
-			//nao aplica aumento para teatro (quem vai é pobretão)
 			preco = sessao.getPreco();
 		} 
 
 		return preco.multiply(BigDecimal.valueOf(quantidade));
+	}
+
+	private static BigDecimal getPreco(Sessao sessao, BigDecimal preco) {
+		if(sessao.getDuracaoEmMinutos() > 60){
+			preco = preco.add(sessao.getPreco().multiply(BigDecimal.valueOf(0.10)));
+		}
+		return preco;
+	}
+
+	private static BigDecimal getPreco(Sessao va1, double totalIngressos, double percentual) {
+		BigDecimal preco;
+		if((va1.getTotalIngressos() - va1.getIngressosReservados()) / va1.getTotalIngressos().doubleValue() <= totalIngressos) { 
+			preco = va1.getPreco().add(va1.getPreco().multiply(BigDecimal.valueOf(percentual)));
+		} else {
+			preco = va1.getPreco();
+		}
+		return preco;
 	}
 
 }
