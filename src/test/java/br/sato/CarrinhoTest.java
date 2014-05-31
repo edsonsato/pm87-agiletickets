@@ -11,7 +11,7 @@ public class CarrinhoTest {
 		Produto p = new Produto(20.0);
 		Carrinho c = new Carrinho(p);
 		double maiorValor = c.getMaiorValor();
-		Assert.assertEquals(21.0, maiorValor, 0.001);
+		Assert.assertEquals(20.0, maiorValor, 0.001);
 	}
 	@Test
 	public void verificaMaiorValorComVariosProdutos() throws Exception {
