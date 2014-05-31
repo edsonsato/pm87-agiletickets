@@ -35,4 +35,5 @@ public enum TipoDeEspetaculo {
 	};
 	
 	public abstract BigDecimal calcula(Sessao sessao);
+	
 }
